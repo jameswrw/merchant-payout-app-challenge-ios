@@ -1,2 +1,5 @@
 docs/example
 docs/ios
+.DS_Store
+ios-interview.xcodeproj/xcuserdata/
+ios-interview.xcodeproj/project.xcworkspace/xcuserdata/james.xcuserdatad/
