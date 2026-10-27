@@ -8,13 +8,18 @@
 import Foundation
 
 @Observable
-class HomeScreenViewModel {
+final class HomeScreenViewModel {
     var merchantData: MerchantData?
     
     func update() async {
         let url = API.baseURL.appendingPathComponent("api/merchant")
         do {
             let (data, response) = try await API.session.data(from: url)
+            if let http = response as? HTTPURLResponse, !(200...299).contains(http.statusCode) {
+                merchantData = nil
+                return
+            }
+            
             let merchant = try JSONDecoder().decode(MerchantData.self, from: data)
             self.merchantData = merchant
         } catch {

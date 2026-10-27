@@ -19,25 +19,32 @@ struct HomeScreenView: View {
                     Text("Merchant Dashboard")
                         .font(.largeTitle)
                         .fontWeight(.bold)
-                    BalanceView(viewModel: viewModel)
+                    
                     if viewModel.merchantData != nil {
-                        RecentActivityView(viewModel: viewModel)
-                    } else {
-                        Text("Loading")
-                    }
-                    Spacer()
+                        BalanceView(viewModel: viewModel)
 
-                    Button {
-                        makePayout = true
-                    } label: {
-                        Text("Send Payout",
-                             comment: "Primary action button that starts a merchant payout.")
+                        RecentActivityView(viewModel: viewModel)
+                        
+                        Spacer()
+
+                        Button {
+                            makePayout = true
+                        } label: {
+                            Text("Send Payout",
+                                 comment: "Primary action button that starts a merchant payout.")
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.regular)
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                    } else {
+                        ContentUnavailableView(
+                            "Merchant Dashboard",
+                            systemImage: "list.bullet.rectangle",
+                            description: Text("Home screen is loading ")
+                        )
                     }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.regular)
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity)
-                    .padding()
                 }
                 .padding()
             }
