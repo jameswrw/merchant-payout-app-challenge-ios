@@ -8,7 +8,7 @@
 import Foundation
 
 extension PayoutViewModel {
-    var normalizedIBAN: String {
+    private var normalizedIBAN: String {
         iban.uppercased().replacingOccurrences(of: " ", with: "")
     }
 

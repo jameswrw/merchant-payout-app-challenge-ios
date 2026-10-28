@@ -9,11 +9,16 @@ import Foundation
 
 @Observable
 final class PayoutViewModel {
-    var currency: Currency = .GBP
-    // Amount stored in the smallest currency unit (e.g. pennies/cents)
-    var amount: Int = 0
-    var iban: String = ""
+    var currency: Currency
+    var amount: Int
+    var iban: String
 
+    init(currency: Currency = .GBP, amount: Int = 0, iban: String = "") {
+        self.currency = currency
+        self.amount = amount
+        self.iban = iban
+    }
+    
     // Formatter configured with the current currency. Use per-call creation to respect currency changes.
     private func makeFormatter() -> NumberFormatter {
         let f = NumberFormatter()
@@ -35,8 +40,8 @@ final class PayoutViewModel {
         let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)
 
         // If the input contains only digits, treat it as minor units.
-        if CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: trimmed)), trimmed.isEmpty == false {
-            amount = Int(trimmed) ?? 0
+        if let allDigits = Int(input) {
+            amount = allDigits
             return
         }
 
