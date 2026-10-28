@@ -42,7 +42,7 @@ struct PayoutView: View {
                         }
                     ))
                     .keyboardType(.decimalPad)
-                    .textContentType(.oneTimeCode)
+                    .textContentType(.none)
                     .padding()
                     .background(Color(uiColor: .systemBackground), in: Capsule())
                     .onChange(of: viewModel.currency) { _, _ in
@@ -105,9 +105,6 @@ struct PayoutView: View {
             }
         }
         .navigationTitle("Send Payout")
-        .onAppear() {
-            viewModel = PayoutViewModel(deviceIdentity: viewModel.deviceIdentity)
-        }
         .alert("Authentication Failed", isPresented: $showAuthError) {
             Button("OK", role: .confirm) {
                 // Do nothing

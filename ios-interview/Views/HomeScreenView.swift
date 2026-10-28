@@ -42,7 +42,7 @@ struct HomeScreenView: View {
                         ContentUnavailableView(
                             "Merchant Dashboard",
                             systemImage: "list.bullet.rectangle",
-                            description: Text("Home screen is loading ")
+                            description: Text("Home screen is loading")
                         )
                     }
                 }

@@ -105,12 +105,12 @@ private struct ToastPresenter<Content: View>: View {
 
             if isPresented {
                 ToastView(config: config)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .transition(.move(edge: .top).combined(with: .opacity))
                     .onAppear(perform: scheduleAutoDismiss)
                     .onChange(of: isPresented) { _, newValue in
                         if newValue { scheduleAutoDismiss() }
                     }
-                    .padding(.bottom, 24)
+                    .padding(.top, 24)
             }
         }
         .animation(.spring(response: 0.35, dampingFraction: 0.85), value: isPresented)
