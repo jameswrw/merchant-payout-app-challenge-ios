@@ -49,7 +49,7 @@ struct HomeScreenView: View {
                 .padding()
             }
             .navigationDestination(isPresented: $makePayout) {
-                PayoutView()
+                PayoutView(viewModel: PayoutViewModel())
             }
         }
         .task {

@@ -1,0 +1,27 @@
+//
+//  PayoutDetailsViewModel.swift
+//  ios-interview
+//
+//  Created by James Weatherley on 27/10/2026.
+//
+
+import Foundation
+
+struct PayoutDetailsViewModel: Codable {
+    let amount: Int
+    let currency: Currency
+    let iban: String
+    
+    func confirmPayment() async throws -> PayoutResponse {
+        var request = URLRequest(url: API.baseURL.appendingPathComponent("api/payouts"))
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        request.httpBody = try JSONEncoder().encode(self)
+        let (data, response) = try await API.session.data(for: request)
+        if let http = response as? HTTPURLResponse, !(200...299).contains(http.statusCode) {
+            throw URLError(.badServerResponse)
+        }
+        return try JSONDecoder().decode(PayoutResponse.self, from: data)
+    }
+}
