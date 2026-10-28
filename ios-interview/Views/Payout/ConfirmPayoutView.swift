@@ -12,6 +12,7 @@ struct ConfirmPayoutView: View {
     @Environment(\.navigation) private var navigation
     @State var payoutResponse: PayoutResponse?
     let viewModel: PayoutDetailsViewModel
+    @State private var errorMessage: String?
     
     var body: some View {
         ZStack {
@@ -19,16 +20,29 @@ struct ConfirmPayoutView: View {
             VStack {
                 PayoutDetailsView(viewModel: viewModel)
                     .padding()
+                if let errorMessage {
+                    PayoutErrorView(message: errorMessage)
+                }
                 Spacer()
                 Button {
                     Task {
                         do {
                             payoutResponse = try await viewModel.confirmPayment()
+                            errorMessage = nil
                             if let payoutResponse {
                                 navigation.path.append(Route.payoutSuccess(payoutResponse))
                             }
+                        } catch NetworkError.badStatus(let statusCode) {
+                            switch statusCode {
+                            case 400:
+                                errorMessage = "Insufficient funds. Please check your available balance."
+                            case 503:
+                                errorMessage = "Service temporarily unavailable. Please try again later."
+                            default:
+                                errorMessage = "There was a problem. Please try again later."
+                            }
                         } catch {
-                            print(error)
+                            errorMessage = "There was a problem. Please try again later."
                         }
                     }
                 } label: {
@@ -54,3 +68,4 @@ struct ConfirmPayoutView: View {
         )
     )
 }
+
