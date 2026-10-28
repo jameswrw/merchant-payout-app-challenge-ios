@@ -12,6 +12,7 @@ struct PayoutView: View {
     @State var viewModel: PayoutViewModel
     @State private var showAuthError = false
     @State private var lastAuthError: Error?
+    @State private var showToast = false
     @Environment(\.navigation) private var navigation
 
     let biometrics = BiometricsController()
@@ -108,6 +109,18 @@ struct PayoutView: View {
             }
         } message: {
             Text(lastAuthError?.localizedDescription ?? "Authentication failed")
+        }
+        .toast(
+            isPresented: $showToast,
+            config: ToastConfig(
+                style: .info,
+                title: "Security Notice",
+                subtitle: "Screenshots of financial data may be a security risk.",
+                duration: 5.0
+            )
+        )
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.userDidTakeScreenshotNotification)) { _ in
+            showToast = true
         }
     }
     
