@@ -58,6 +58,15 @@ final class PayoutViewModel {
             amount = 0
         }
     }
+    
+    func authenticate() -> Bool {
+        // Only need to authenticate for over 1000 major currency units.
+        guard amount > 100_000 else {
+            return true
+        }
+        
+        return false
+    }
 }
 
 extension NumberFormatter {

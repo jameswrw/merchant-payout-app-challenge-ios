@@ -10,7 +10,11 @@ import SwiftUI
 struct PayoutView: View {
     
     @State var viewModel: PayoutViewModel
+    @State private var showAuthError = false
+    @State private var lastAuthError: Error?
     @Environment(\.navigation) private var navigation
+
+    let biometrics = BiometricsController()
     
     var body: some View {
         ZStack {
@@ -67,13 +71,20 @@ struct PayoutView: View {
                 Spacer()
                 
                 Button {
-                    let payoutDetailsViewModel = PayoutDetailsViewModel(
-                        amount: viewModel.amount,
-                        currency: viewModel.currency,
-                        iban: viewModel.iban,
-                        device_id: viewModel.deviceIdentity
-                    )
-                    navigation.path.append(Route.payoutConfirm(payoutDetailsViewModel))
+                    if viewModel.amount > 100_000 {
+                        biometrics.authenticate { result in
+                            switch result {
+                            case .success:
+                                makePayment()
+                                break
+                            case .failure(let error):
+                                lastAuthError = error
+                                showAuthError = true
+                            }
+                        }
+                    } else {
+                        makePayment()
+                    }
                 } label: {
                     Text("Continue",
                          comment: "Primary action button that starts a merchant payout with the entered values.")
@@ -91,6 +102,16 @@ struct PayoutView: View {
         .onAppear() {
             viewModel = PayoutViewModel(deviceIdentity: viewModel.deviceIdentity)
         }
+    }
+    
+    func makePayment() {
+        let payoutDetailsViewModel = PayoutDetailsViewModel(
+            amount: viewModel.amount,
+            currency: viewModel.currency,
+            iban: viewModel.iban,
+            device_id: viewModel.deviceIdentity
+        )
+        navigation.path.append(Route.payoutConfirm(payoutDetailsViewModel))
     }
 }
 
