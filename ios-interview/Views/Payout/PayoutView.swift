@@ -102,6 +102,13 @@ struct PayoutView: View {
         .onAppear() {
             viewModel = PayoutViewModel(deviceIdentity: viewModel.deviceIdentity)
         }
+        .alert("Authentication Failed", isPresented: $showAuthError) {
+            Button("OK", role: .confirm) {
+                // Do nothing
+            }
+        } message: {
+            Text(lastAuthError?.localizedDescription ?? "Authentication failed")
+        }
     }
     
     func makePayment() {
