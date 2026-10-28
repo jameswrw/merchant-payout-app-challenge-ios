@@ -113,7 +113,7 @@ struct PayoutView: View {
         .toast(
             isPresented: $showToast,
             config: ToastConfig(
-                style: .info,
+                style: .warning,
                 title: "Security Notice",
                 subtitle: "Screenshots of financial data may be a security risk.",
                 duration: 5.0
