@@ -31,7 +31,8 @@ struct PayoutDetailsView: View {
         viewModel: .init(
             amount: 1234,
             currency: .GBP,
-            iban: "GB29NWBK60161331926819"
+            iban: "GB29NWBK60161331926819",
+            device_id: nil
         )
     )
 }

@@ -10,6 +10,12 @@ import Foundation
 @Observable
 final class HomeScreenViewModel {
     var merchantData: MerchantData?
+    let deviceIdentity: UUID?
+
+    init(merchantData: MerchantData? = nil, deviceIdentity: UUID?) {
+        self.merchantData = merchantData
+        self.deviceIdentity = deviceIdentity
+    }
     
     func update() async {
         let url = API.baseURL.appendingPathComponent("api/merchant")

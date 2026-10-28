@@ -9,14 +9,27 @@ import SwiftUI
 
 @main
 struct MerchantPayoutApp: App {
+    
+    var deviceIdentity: UUID?
+    
+    var body: some Scene {
+        WindowGroup {
+            HomeScreenView(viewModel: .init(deviceIdentity: deviceIdentity))
+        }
+    }
+    
     init() {
         // Register MockURLProtocol so URLSession.shared also routes through the mock server.
         URLProtocol.registerClass(MockURLProtocol.self)
-    }
-
-    var body: some Scene {
-        WindowGroup {
-            HomeScreenView()
+        let keychainPersistance = DeviceIdentifierPersistance()
+        
+        deviceIdentity = keychainPersistance.fetchUUID()
+        if deviceIdentity == nil {
+            deviceIdentity = UUID()
+            if let deviceIdentity {
+                keychainPersistance.save(uuid: deviceIdentity)
+            }
         }
     }
 }
+

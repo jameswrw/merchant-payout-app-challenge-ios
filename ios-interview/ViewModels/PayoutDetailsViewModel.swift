@@ -8,9 +8,11 @@
 import Foundation
 
 struct PayoutDetailsViewModel: Codable, Hashable, Equatable {
+    
     let amount: Int
     let currency: Currency
     let iban: String
+    let device_id: UUID?
     
     func confirmPayment() async throws -> PayoutResponse {
         var request = URLRequest(url: API.baseURL.appendingPathComponent("api/payouts"))

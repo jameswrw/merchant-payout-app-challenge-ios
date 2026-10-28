@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeScreenView: View {
-    @State var viewModel = HomeScreenViewModel()
+    @State var viewModel: HomeScreenViewModel
     @State private var navigation = Navigation()
     
     var body: some View {
@@ -51,7 +51,7 @@ struct HomeScreenView: View {
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .payout:
-                    PayoutView(viewModel: PayoutViewModel())
+                    PayoutView(viewModel: PayoutViewModel(deviceIdentity: viewModel.deviceIdentity))
                 case .payoutConfirm(let payoutDetailsViewModel):
                     ConfirmPayoutView(viewModel: payoutDetailsViewModel)
                 case .payoutSuccess(let payoutResponse):
@@ -69,5 +69,5 @@ struct HomeScreenView: View {
 }
 
 #Preview {
-    HomeScreenView()
+    HomeScreenView(viewModel: .init(deviceIdentity: nil))
 }

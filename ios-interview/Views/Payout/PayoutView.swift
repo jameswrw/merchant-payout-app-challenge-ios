@@ -9,9 +9,9 @@ import SwiftUI
 
 struct PayoutView: View {
     
-    @State var viewModel = PayoutViewModel()
+    @State var viewModel: PayoutViewModel
     @Environment(\.navigation) private var navigation
-
+    
     var body: some View {
         ZStack {
             Color(uiColor: .systemGroupedBackground).ignoresSafeArea()
@@ -70,7 +70,8 @@ struct PayoutView: View {
                     let payoutDetailsViewModel = PayoutDetailsViewModel(
                         amount: viewModel.amount,
                         currency: viewModel.currency,
-                        iban: viewModel.iban
+                        iban: viewModel.iban,
+                        device_id: viewModel.deviceIdentity
                     )
                     navigation.path.append(Route.payoutConfirm(payoutDetailsViewModel))
                 } label: {
@@ -88,13 +89,11 @@ struct PayoutView: View {
         }
         .navigationTitle("Send Payout")
         .onAppear() {
-            viewModel = PayoutViewModel()
+            viewModel = PayoutViewModel(deviceIdentity: viewModel.deviceIdentity)
         }
     }
 }
 
 #Preview {
-    NavigationStack {
-        PayoutView()
-    }
+    PayoutView(viewModel: .init(deviceIdentity: nil))
 }

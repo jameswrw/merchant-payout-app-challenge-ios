@@ -13,11 +13,13 @@ final class PayoutViewModel {
     var currency: Currency
     var amount: Int
     var iban: String
-
-    init(currency: Currency = .GBP, amount: Int = 0, iban: String = "") {
+    var deviceIdentity: UUID?
+    
+    init(currency: Currency = .GBP, amount: Int = 0, iban: String = "", deviceIdentity: UUID?) {
         self.currency = currency
         self.amount = amount
         self.iban = iban
+        self.deviceIdentity = deviceIdentity
     }
     
     // Formatter configured with the current currency. Use per-call creation to respect currency changes.

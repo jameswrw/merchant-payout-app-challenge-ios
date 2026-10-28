@@ -45,7 +45,7 @@ struct BalanceView: View {
 }
 
 #Preview {
-    let viewModel = HomeScreenViewModel()
+    let viewModel = HomeScreenViewModel(deviceIdentity: nil)
     BalanceView(viewModel: viewModel)
         .task {
             await viewModel.update()

@@ -63,7 +63,7 @@ private struct RecentActivityList: View {
 }
 
 #Preview {
-    let viewModel = HomeScreenViewModel()
+    let viewModel = HomeScreenViewModel(deviceIdentity: nil)
     RecentActivityView(viewModel: viewModel)
         .task {
             await viewModel.update()
