@@ -36,16 +36,9 @@ struct PayoutSuccessView: View {
             }
             VStack {
                 Spacer()
-                Button {
+                ProceedButton("Done") {
                     navigation.path = NavigationPath()
-                } label: {
-                    Text("Done",
-                         comment: "Primary action to return to the home screen.")
                 }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.regular)
-                .fontWeight(.semibold)
-                .frame(maxWidth: .infinity)
             }
         }
         .navigationTitle("Success")
@@ -64,3 +57,4 @@ struct PayoutSuccessView: View {
         )
     )
 }
+

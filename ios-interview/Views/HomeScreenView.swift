@@ -27,17 +27,9 @@ struct HomeScreenView: View {
                         
                         Spacer()
 
-                        Button {
+                        ProceedButton("Send Payout", accessibilityIdentifier: "sendPayout") {
                             navigation.path.append(Route.payout)
-                        } label: {
-                            Text("Send Payout",
-                                 comment: "Primary action button that starts a merchant payout.")
                         }
-                        .accessibilityIdentifier("sendPayout")
-                        .buttonStyle(.borderedProminent)
-                        .controlSize(.regular)
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
                         .padding()
                     } else {
                         ContentUnavailableView(

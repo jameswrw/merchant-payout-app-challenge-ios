@@ -24,7 +24,7 @@ struct ConfirmPayoutView: View {
                     PayoutErrorView(message: errorMessage)
                 }
                 Spacer()
-                Button {
+                ProceedButton("Confirm Payout") {
                     Task {
                         do {
                             payoutResponse = try await viewModel.confirmPayment()
@@ -45,14 +45,7 @@ struct ConfirmPayoutView: View {
                             errorMessage = "There was a problem. Please try again later."
                         }
                     }
-                } label: {
-                    Text("Confirm Payout",
-                         comment: "Primary action button that confirms a merchant payout.")
                 }
-                .buttonStyle(.borderedProminent)
-                .controlSize(.regular)
-                .fontWeight(.semibold)
-                .frame(maxWidth: .infinity)
                 .navigationTitle("Confirm Payout")
             }
         }
@@ -69,4 +62,3 @@ struct ConfirmPayoutView: View {
         )
     )
 }
-

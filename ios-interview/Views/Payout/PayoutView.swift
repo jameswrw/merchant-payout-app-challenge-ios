@@ -76,7 +76,7 @@ struct PayoutView: View {
                         .lineSpacing(8)
                         .fixedSize(horizontal: false, vertical: true)
 
-                    Button {
+                    ProceedButton("Continue", accessibilityIdentifier: "continue", isDisabled: (viewModel.amount <= 0 || !viewModel.isIBANValid)) {
                         if viewModel.amount > 100_000 {
                             biometrics.authenticate { result in
                                 switch result {
@@ -90,16 +90,7 @@ struct PayoutView: View {
                         } else {
                             makePayment()
                         }
-                    } label: {
-                        Text("Continue",
-                             comment: "Primary action button that starts a merchant payout with the entered values.")
                     }
-                    .accessibilityIdentifier("continue")
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.regular)
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity)
-                    .disabled(viewModel.amount <= 0 || !viewModel.isIBANValid)
                     .padding(.top, 8)
                 }
                 .padding()
