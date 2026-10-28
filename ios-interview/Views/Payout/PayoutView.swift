@@ -41,6 +41,7 @@ struct PayoutView: View {
                             viewModel.updateAmount(from: newValue)
                         }
                     ))
+                    .accessibilityIdentifier("amount")
                     .keyboardType(.decimalPad)
                     .textContentType(.none)
                     .padding()
@@ -51,12 +52,17 @@ struct PayoutView: View {
 
                     Text("IBAN")
                         .foregroundStyle(.secondary)
-                    TextField("IBAN", text: $viewModel.iban, prompt: Text("GB29NWBK60161331926819"))
-                        .textInputAutocapitalization(.characters)
-                        .disableAutocorrection(true)
-                        .keyboardType(.asciiCapable)
-                        .padding()
-                        .background(Color(uiColor: .systemBackground), in: Capsule())
+                    TextField(
+                        "IBAN",
+                        text: $viewModel.iban,
+                        prompt: Text("GB29NWBK60161331926819")
+                    )
+                    .accessibilityIdentifier("iban")
+                    .textInputAutocapitalization(.characters)
+                    .disableAutocorrection(true)
+                    .keyboardType(.asciiCapable)
+                    .padding()
+                    .background(Color(uiColor: .systemBackground), in: Capsule())
 
                     if !viewModel.iban.isEmpty && !viewModel.isIBANValid {
                         Text("Please enter a valid IBAN. It should start with two letters and pass the checksum.")
@@ -88,6 +94,7 @@ struct PayoutView: View {
                         Text("Continue",
                              comment: "Primary action button that starts a merchant payout with the entered values.")
                     }
+                    .accessibilityIdentifier("continue")
                     .buttonStyle(.borderedProminent)
                     .controlSize(.regular)
                     .fontWeight(.semibold)

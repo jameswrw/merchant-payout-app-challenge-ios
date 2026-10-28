@@ -11,12 +11,12 @@ import Testing
 struct HomeScreenViewModelTests {
 
     @Test func `test availableBalance without merchant data()`() {
-        let sut = HomeScreenViewModel()
+        let sut = HomeScreenViewModel(deviceIdentity: nil)
         #expect(sut.availableBalance() == "Loading")
     }
     
     @Test func `test availableBalance with merchant data()`() {
-        let sut = HomeScreenViewModel()
+        let sut = HomeScreenViewModel(deviceIdentity: nil)
         sut.merchantData = .init(
             available_balance: 1234,
             pending_balance: 5678,
@@ -27,12 +27,12 @@ struct HomeScreenViewModelTests {
     }
     
     @Test func `test pendingBalance without merchant data()`() {
-        let sut = HomeScreenViewModel()
+        let sut = HomeScreenViewModel(deviceIdentity: nil)
         #expect(sut.availableBalance() == "Loading")
     }
     
     @Test func `test pendingBalance with merchant data()`() {
-        let sut = HomeScreenViewModel()
+        let sut = HomeScreenViewModel(deviceIdentity: nil)
         sut.merchantData = .init(
             available_balance: 1234,
             pending_balance: 5678910,

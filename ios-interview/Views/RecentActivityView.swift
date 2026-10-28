@@ -38,6 +38,7 @@ private struct RecentActivityHeader: View {
                 Text("View All")
                     .font(.body)
                     .fontWeight(.semibold)
+                    .accessibilityIdentifier("viewAllTransactions")
             }
         }
         .padding()

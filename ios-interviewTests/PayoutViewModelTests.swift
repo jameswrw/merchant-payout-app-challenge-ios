@@ -23,7 +23,7 @@ struct PayoutViewModelTests {
         ]
     )
     func `test if iban is plausible`(iban: String, valid: Bool) {
-        let sut = PayoutViewModel(currency: .GBP, amount: 1234, iban: iban)
+        let sut = PayoutViewModel(currency: .GBP, amount: 1234, iban: iban, deviceIdentity: nil)
         #expect(sut.isIBANFormatPlausible == valid)
     }
     
@@ -40,7 +40,7 @@ struct PayoutViewModelTests {
         ]
     )
     func `test if iban is valid`(iban: String, valid: Bool) {
-        let sut = PayoutViewModel(currency: .GBP, amount: 1234, iban: iban)
+        let sut = PayoutViewModel(currency: .GBP, amount: 1234, iban: iban, deviceIdentity: nil)
         #expect(sut.isIBANValid == valid)
     }
     
@@ -56,7 +56,7 @@ struct PayoutViewModelTests {
         ]
     )
     func `test updateAmount()`(input: String, amount: Int) {
-        let sut = PayoutViewModel(currency: .GBP, amount: 0, iban: "GB29NWBK60161331926819")
+        let sut = PayoutViewModel(currency: .GBP, amount: 0, iban: "GB29NWBK60161331926819", deviceIdentity: nil)
         sut.updateAmount(from: input)
         #expect(sut.amount == amount)
     }

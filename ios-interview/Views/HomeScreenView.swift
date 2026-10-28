@@ -33,6 +33,7 @@ struct HomeScreenView: View {
                             Text("Send Payout",
                                  comment: "Primary action button that starts a merchant payout.")
                         }
+                        .accessibilityIdentifier("sendPayout")
                         .buttonStyle(.borderedProminent)
                         .controlSize(.regular)
                         .fontWeight(.semibold)
