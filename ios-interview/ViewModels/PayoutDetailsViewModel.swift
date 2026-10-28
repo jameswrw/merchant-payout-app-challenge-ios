@@ -20,7 +20,8 @@ struct PayoutDetailsViewModel: Codable, Hashable, Equatable {
         request.httpBody = try JSONEncoder().encode(self)
         let (data, response) = try await API.session.data(for: request)
         if let http = response as? HTTPURLResponse, !(200...299).contains(http.statusCode) {
-            throw NetworkError.badStatus(http.statusCode)
+            let errorResponse = try JSONDecoder().decode(ErrorResponse.self, from: data)
+            throw NetworkError.badStatus(http.statusCode, errorResponse.error)
         }
         return try JSONDecoder().decode(PayoutResponse.self, from: data)
     }

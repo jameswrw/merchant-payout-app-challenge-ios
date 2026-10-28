@@ -11,8 +11,8 @@ struct ConfirmPayoutView: View {
 
     @Environment(\.navigation) private var navigation
     @State var payoutResponse: PayoutResponse?
-    let viewModel: PayoutDetailsViewModel
     @State private var errorMessage: String?
+    let viewModel: PayoutDetailsViewModel
     
     var body: some View {
         ZStack {
@@ -32,12 +32,12 @@ struct ConfirmPayoutView: View {
                             if let payoutResponse {
                                 navigation.path.append(Route.payoutSuccess(payoutResponse))
                             }
-                        } catch NetworkError.badStatus(let statusCode) {
+                        } catch NetworkError.badStatus(let statusCode, let reason) {
                             switch statusCode {
                             case 400:
-                                errorMessage = "Insufficient funds. Please check your available balance."
+                                errorMessage = "\(reason). Please check your available balance."
                             case 503:
-                                errorMessage = "Service temporarily unavailable. Please try again later."
+                                errorMessage = "\(reason). Please try again later."
                             default:
                                 errorMessage = "There was a problem. Please try again later."
                             }

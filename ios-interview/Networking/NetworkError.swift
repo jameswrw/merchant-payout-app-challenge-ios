@@ -8,5 +8,5 @@
 import Foundation
 
 enum NetworkError: Error{
-    case badStatus(Int)
+    case badStatus(Int, String)
 }
