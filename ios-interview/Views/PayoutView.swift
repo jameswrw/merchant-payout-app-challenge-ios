@@ -10,8 +10,8 @@ import SwiftUI
 struct PayoutView: View {
     
     @State var viewModel = PayoutViewModel()
-    @State var confirmPayout = false
-    
+    @Environment(\.navigation) private var navigation
+
     var body: some View {
         ZStack {
             Color(uiColor: .systemGroupedBackground).ignoresSafeArea()
@@ -67,7 +67,12 @@ struct PayoutView: View {
                 Spacer()
                 
                 Button {
-                    confirmPayout = true
+                    let payoutDetailsViewModel = PayoutDetailsViewModel(
+                        amount: viewModel.amount,
+                        currency: viewModel.currency,
+                        iban: viewModel.iban
+                    )
+                    navigation.path.append(Route.payoutConfirm(payoutDetailsViewModel))
                 } label: {
                     Text("Continue",
                          comment: "Primary action button that starts a merchant payout with the entered values.")
@@ -81,17 +86,9 @@ struct PayoutView: View {
             }
             .padding()
         }
+        .navigationTitle("Send Payout")
         .onAppear() {
             viewModel = PayoutViewModel()
-        }
-        .navigationDestination(isPresented: $confirmPayout) {
-            ConfirmPayoutView(
-                viewModel: .init(
-                    amount: viewModel.amount,
-                    currency: viewModel.currency,
-                    iban: viewModel.iban
-                )
-            )
         }
     }
 }

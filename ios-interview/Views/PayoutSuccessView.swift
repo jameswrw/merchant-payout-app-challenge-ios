@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PayoutSuccessView: View {
     
+    @Environment(\.navigation) private var navigation
     let viewModel: PayoutResponse
     
     var body: some View {
@@ -36,7 +37,7 @@ struct PayoutSuccessView: View {
             VStack {
                 Spacer()
                 Button {
-                    
+                    navigation.path = NavigationPath()
                 } label: {
                     Text("Done",
                          comment: "Primary action to return to the home screen.")

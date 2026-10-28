@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PayoutDetailsViewModel: Codable {
+struct PayoutDetailsViewModel: Codable, Hashable, Equatable {
     let amount: Int
     let currency: Currency
     let iban: String

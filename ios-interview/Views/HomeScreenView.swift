@@ -9,10 +9,10 @@ import SwiftUI
 
 struct HomeScreenView: View {
     @State var viewModel = HomeScreenViewModel()
-    @State var makePayout = false
+    @State private var navigation = Navigation()
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigation.path) {
             ZStack {
                 Color(uiColor: .systemGroupedBackground).ignoresSafeArea()
                 VStack(alignment: .leading, spacing: 16) {
@@ -28,7 +28,7 @@ struct HomeScreenView: View {
                         Spacer()
 
                         Button {
-                            makePayout = true
+                            navigation.path.append(Route.payout)
                         } label: {
                             Text("Send Payout",
                                  comment: "Primary action button that starts a merchant payout.")
@@ -48,13 +48,23 @@ struct HomeScreenView: View {
                 }
                 .padding()
             }
-            .navigationDestination(isPresented: $makePayout) {
-                PayoutView(viewModel: PayoutViewModel())
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .payout:
+                    PayoutView(viewModel: PayoutViewModel())
+                case .payoutConfirm(let payoutDetailsViewModel):
+                    ConfirmPayoutView(viewModel: payoutDetailsViewModel)
+                case .payoutSuccess(let payoutResponse):
+                    PayoutSuccessView(viewModel: payoutResponse)
+                case .transactionList:
+                    TransactionListView()
+                }
             }
         }
         .task {
             await viewModel.update()
         }
+        .environment(\.navigation, navigation)
     }
 }
 

@@ -9,6 +9,7 @@ import Foundation
 
 @Observable
 final class PayoutViewModel {
+    
     var currency: Currency
     var amount: Int
     var iban: String

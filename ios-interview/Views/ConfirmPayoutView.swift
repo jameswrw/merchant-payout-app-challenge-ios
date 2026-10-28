@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ConfirmPayoutView: View {
-    
-    @State var payoutSuccess = false
+
+    @Environment(\.navigation) private var navigation
     @State var payoutResponse: PayoutResponse?
     let viewModel: PayoutDetailsViewModel
     
@@ -24,7 +24,9 @@ struct ConfirmPayoutView: View {
                     Task {
                         do {
                             payoutResponse = try await viewModel.confirmPayment()
-                            payoutSuccess = true
+                            if let payoutResponse {
+                                navigation.path.append(Route.payoutSuccess(payoutResponse))
+                            }
                         } catch {
                             print(error)
                         }
@@ -38,11 +40,6 @@ struct ConfirmPayoutView: View {
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity)
                 .navigationTitle("Confirm Payout")
-                .navigationDestination(isPresented: $payoutSuccess) {
-                    if let payoutResponse {
-                        PayoutSuccessView(viewModel: payoutResponse)
-                    }
-                }
             }
         }
     }

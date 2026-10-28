@@ -23,6 +23,8 @@ struct RecentActivityView: View {
 }
 
 private struct RecentActivityHeader: View {
+    @Environment(\.navigation) private var navigation
+
     var body: some View {
         HStack {
             Text("Recent Activity")
@@ -32,9 +34,7 @@ private struct RecentActivityHeader: View {
 
             Spacer()
 
-            NavigationLink {
-                TransactionListView()
-            } label: {
+            NavigationLink(value: Route.transactionList) {
                 Text("View All")
                     .font(.body)
                     .fontWeight(.semibold)

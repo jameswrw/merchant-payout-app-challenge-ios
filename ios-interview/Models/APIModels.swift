@@ -28,7 +28,7 @@ struct PaginatedActivityResponse: Codable {
     let has_more: Bool
 }
 
-struct PayoutResponse: Codable {
+struct PayoutResponse: Codable, Equatable, Hashable {
     let id: String
     let status: PayoutStatus
     let amount: Int
