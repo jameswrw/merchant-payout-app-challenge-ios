@@ -64,14 +64,12 @@ struct PayoutView: View {
                             .foregroundStyle(.red)
                     }
 
-                    // Keep this as a true multiline text by allowing it to wrap and expand
                     Text("International Bank Account Number. At least 15 characters starting with two uppercase country code letters (e.g. GB29NWBK60161331926819).")
                         .font(.body)
                         .foregroundStyle(.secondary)
                         .lineSpacing(8)
                         .fixedSize(horizontal: false, vertical: true)
 
-                    // Spacer removed to allow ScrollView to size content and avoid pushing the button offscreen
                     Button {
                         if viewModel.amount > 100_000 {
                             biometrics.authenticate { result in
