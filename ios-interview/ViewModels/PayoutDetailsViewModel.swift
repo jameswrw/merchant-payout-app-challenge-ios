@@ -18,7 +18,7 @@ struct PayoutDetailsViewModel: Codable, Hashable, Equatable {
     let iban: String
     let device_id: UUID?
     
-    func confirmPayment() async throws -> PayoutResponse {
+    private func confirmPayment() async throws -> PayoutResponse {
         var request = URLRequest(url: API.baseURL.appendingPathComponent("api/payouts"))
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
