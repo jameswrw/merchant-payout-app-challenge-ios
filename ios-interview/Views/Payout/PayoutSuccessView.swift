@@ -36,7 +36,11 @@ struct PayoutSuccessView: View {
             }
             VStack {
                 Spacer()
-                ProceedButton("Done") {
+                ProceedButton(
+                    "Done",
+                    accessibilityIdentifier: "done",
+                    accessibilityHint: "Return to the home screen"
+                ) {
                     navigation.path = NavigationPath()
                 }
             }

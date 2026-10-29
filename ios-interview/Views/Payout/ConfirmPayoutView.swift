@@ -24,7 +24,11 @@ struct ConfirmPayoutView: View {
                     PayoutErrorView(message: errorMessage)
                 }
                 Spacer()
-                ProceedButton("Confirm Payout") {
+                ProceedButton(
+                    "Confirm Payout",
+                    accessibilityIdentifier: "confirmPayout",
+                    accessibilityHint: "Confirm the payout"
+                ) {
                     Task {
                         do {
                             payoutResponse = try await viewModel.confirmPayment()

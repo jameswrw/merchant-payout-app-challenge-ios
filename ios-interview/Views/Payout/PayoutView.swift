@@ -41,6 +41,7 @@ struct PayoutView: View {
                             viewModel.updateAmount(from: newValue)
                         }
                     ))
+                    .accessibilityLabel("Amount")
                     .accessibilityIdentifier("amount")
                     .keyboardType(.decimalPad)
                     .textContentType(.none)
@@ -58,6 +59,8 @@ struct PayoutView: View {
                         prompt: Text("GB29NWBK60161331926819")
                     )
                     .accessibilityIdentifier("iban")
+                    .accessibilityLabel("IBAN")
+                    .accessibilityHint("Enter the international bank account number")
                     .textInputAutocapitalization(.characters)
                     .disableAutocorrection(true)
                     .keyboardType(.asciiCapable)
@@ -82,7 +85,12 @@ struct PayoutView: View {
             .safeAreaInset(edge: .bottom) {
                 HStack {
                     Spacer()
-                    ProceedButton("Continue", accessibilityIdentifier: "continue", isDisabled: (viewModel.amount <= 0 || !viewModel.isIBANValid)) {
+                    ProceedButton(
+                        "Continue",
+                        accessibilityIdentifier: "continue",
+                        accessibilityHint: "Proceed to payout confirmation",
+                        isDisabled: (viewModel.amount <= 0 || !viewModel.isIBANValid)
+                    ) {
                         if viewModel.amount > 100_000 {
                             biometrics.authenticate { result in
                                 switch result {

@@ -2,16 +2,19 @@ import SwiftUI
 
 struct ProceedButton: View {
     let title: LocalizedStringKey
-    let accessibilityIdentifier: String?
+    let accessibilityIdentifier: String
+    let accessibilityHint: String
     let action: () -> Void
     var isDisabled: Bool
 
     init(_ title: LocalizedStringKey,
-         accessibilityIdentifier: String? = nil,
+         accessibilityIdentifier: String,
+         accessibilityHint: String,
          isDisabled: Bool = false,
          action: @escaping () -> Void) {
         self.title = title
         self.accessibilityIdentifier = accessibilityIdentifier
+        self.accessibilityHint = accessibilityHint
         self.isDisabled = isDisabled
         self.action = action
     }
@@ -23,7 +26,7 @@ struct ProceedButton: View {
                     .fontWeight(.semibold)
                     .padding(8)
             }
-            .accessibilityIdentifier(accessibilityIdentifier ?? "")
+            .accessibilityIdentifier(accessibilityIdentifier)
             .buttonStyle(.borderedProminent)
             .clipShape(Capsule())
             .disabled(isDisabled)
@@ -34,9 +37,22 @@ struct ProceedButton: View {
 
 #Preview {
     VStack(spacing: 16) {
-        ProceedButton("Primary Enabled") { }
-        ProceedButton("Primary Disabled", isDisabled: true) { }
-        ProceedButton("With ID", accessibilityIdentifier: "proceed") { }
+        ProceedButton(
+            "Primary Enabled",
+            accessibilityIdentifier: "enabled",
+            accessibilityHint: "Button is enabled"
+        ) { }
+        ProceedButton(
+            "Primary Disabled",
+            accessibilityIdentifier: "disabled",
+            accessibilityHint: "Button is disabled",
+            isDisabled: true
+        ) { }
+        ProceedButton(
+            "With ID",
+            accessibilityIdentifier: "proceed",
+            accessibilityHint: "Proceed to next step"
+        ) { }
     }
     .padding()
 }

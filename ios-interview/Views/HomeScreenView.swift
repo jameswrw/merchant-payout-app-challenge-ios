@@ -27,7 +27,11 @@ struct HomeScreenView: View {
                         
                         Spacer()
 
-                        ProceedButton("Send Payout", accessibilityIdentifier: "sendPayout") {
+                        ProceedButton(
+                            "Send Payout",
+                            accessibilityIdentifier: "sendPayout",
+                            accessibilityHint: "Proceed to make a payout"
+                        ) {
                             navigation.path.append(Route.payout)
                         }
                         .padding()
