@@ -7,6 +7,7 @@
 
 import Foundation
 import Security
+import OSLog
 
 struct DeviceIdentifierPersistance {
     
@@ -36,11 +37,11 @@ struct DeviceIdentifierPersistance {
         let status = SecItemAdd(query as CFDictionary, nil)
         
         if status == errSecSuccess {
-            print("Successfully saved data.")
+            os_log(.default, "Successfully saved device identifier to keychain")
         } else {
-            print("Failed to save to Keychain. Error code: \(status)")
+            os_log("Failed to save to Keychain. Error code: \(status)")
             if let errorString = SecCopyErrorMessageString(status, nil) {
-                print(errorString)
+                os_log("\(errorString)")
             }
         }
     }
@@ -59,7 +60,7 @@ struct DeviceIdentifierPersistance {
         
         guard status == errSecSuccess, let data = item as? Data else {
             if let errorString = SecCopyErrorMessageString(status, nil) {
-                print(errorString)
+                os_log("\(errorString)")
             }
             return nil
         }
