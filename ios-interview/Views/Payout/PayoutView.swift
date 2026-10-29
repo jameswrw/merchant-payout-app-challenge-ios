@@ -75,7 +75,13 @@ struct PayoutView: View {
                         .foregroundStyle(.secondary)
                         .lineSpacing(8)
                         .fixedSize(horizontal: false, vertical: true)
-
+                }
+                .padding()
+            }
+            // Ensure the button is not covered by keyboard by adding a safe area inset
+            .safeAreaInset(edge: .bottom) {
+                HStack {
+                    Spacer()
                     ProceedButton("Continue", accessibilityIdentifier: "continue", isDisabled: (viewModel.amount <= 0 || !viewModel.isIBANValid)) {
                         if viewModel.amount > 100_000 {
                             biometrics.authenticate { result in
@@ -91,15 +97,9 @@ struct PayoutView: View {
                             makePayment()
                         }
                     }
-                    .padding(.top, 8)
+                    Spacer()
                 }
                 .padding()
-            }
-            // Ensure the button is not covered by keyboard by adding a safe area inset
-            .safeAreaInset(edge: .bottom) {
-                Color.clear
-                    .frame(height: 0)
-                    .ignoresSafeArea()
             }
         }
         .navigationTitle("Send Payout")
