@@ -45,12 +45,10 @@ private struct TransactionActivityList: View {
                 Section {
                     ForEach(section.activityItems) { item in
                         ActivityRowView(activityItem: item)
-                            .padding(.vertical, 8)
+                            .padding(.vertical, 4)
                             .listRowInsets(
-                                EdgeInsets(top: 8, leading: 24, bottom: 8, trailing: 24)
+                                EdgeInsets(top: 0, leading: 24, bottom: 8, trailing: 24)
                             )
-                            .listRowSeparator(.visible)
-                            .listRowSeparatorTint(.secondary.opacity(0.2))
                             .onAppear {
                                 guard item.id == lastActivityItemID else {
                                     return

@@ -56,7 +56,7 @@ private struct RecentActivityList: View {
 
                 if item.id != activity.last?.id {
                     Divider()
-                        .padding(.leading, 96)
+                        .padding(.leading, item.activityItemFrameSize + 24)
                 }
             }
         }

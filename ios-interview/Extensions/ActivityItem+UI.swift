@@ -9,6 +9,10 @@ import SwiftUI
 
 extension ActivityItem {
     
+    var activityItemFrameSize: CGFloat {
+        42.0
+    }
+    
     func arrowIcon() -> some View {
         let (imageName, colour) = switch type {
         case .payout, .fee:
@@ -20,7 +24,7 @@ extension ActivityItem {
         let image = Image(systemName: imageName)
             .font(.body)
             .foregroundStyle(colour)
-            .frame(width: 42, height: 42)
+            .frame(width: activityItemFrameSize, height: activityItemFrameSize)
             .background(colour.opacity(0.14), in: Circle())
             .accessibilityHidden(true)
         
