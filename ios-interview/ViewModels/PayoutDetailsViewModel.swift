@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum PayoutError: Error{
+    case payoutError(String)
+}
+
 struct PayoutDetailsViewModel: Codable, Hashable, Equatable {
     
     let amount: Int
@@ -26,5 +30,25 @@ struct PayoutDetailsViewModel: Codable, Hashable, Equatable {
             throw NetworkError.badStatus(http.statusCode, errorResponse.error)
         }
         return try JSONDecoder().decode(PayoutResponse.self, from: data)
+    }
+    
+    /// Confirms the payment and maps any errors to a user-facing message.
+    /// - Returns: A Result that contains either the successful `PayoutResponse` or a localized error message.
+    func confirmPaymentHandlingError() async -> Result<PayoutResponse, PayoutError> {
+        do {
+            let response = try await confirmPayment()
+            return .success(response)
+        } catch NetworkError.badStatus(let statusCode, let reason) {
+            switch statusCode {
+            case 400:
+                return .failure(.payoutError("\(reason). Please check your available balance."))
+            case 503:
+                return .failure(.payoutError("\(reason). Please try again later."))
+            default:
+                return .failure(.payoutError("There was a problem. Please try again later."))
+            }
+        } catch {
+            return .failure(.payoutError("There was a problem. Please try again later."))
+        }
     }
 }

@@ -30,23 +30,17 @@ struct ConfirmPayoutView: View {
                     accessibilityHint: "Confirm the payout"
                 ) {
                     Task {
-                        do {
-                            payoutResponse = try await viewModel.confirmPayment()
+                        let result = await viewModel.confirmPaymentHandlingError()
+                        switch result {
+                        case .success(let response):
+                            payoutResponse = response
                             errorMessage = nil
-                            if let payoutResponse {
-                                navigation.path.append(Route.payoutSuccess(payoutResponse))
+                            navigation.path.append(Route.payoutSuccess(response))
+                        case .failure(let message):
+                            switch message {
+                            case .payoutError(let message):
+                                errorMessage = message
                             }
-                        } catch NetworkError.badStatus(let statusCode, let reason) {
-                            switch statusCode {
-                            case 400:
-                                errorMessage = "\(reason). Please check your available balance."
-                            case 503:
-                                errorMessage = "\(reason). Please try again later."
-                            default:
-                                errorMessage = "There was a problem. Please try again later."
-                            }
-                        } catch {
-                            errorMessage = "There was a problem. Please try again later."
                         }
                     }
                 }
@@ -66,3 +60,4 @@ struct ConfirmPayoutView: View {
         )
     )
 }
+
