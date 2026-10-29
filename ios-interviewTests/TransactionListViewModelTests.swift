@@ -25,6 +25,11 @@ struct TransactionListViewModelTests {
         #expect(sut.activityItems.count == 30)
         #expect(sut.nextCursor == nil)
         #expect(sut.hasMore == false)
+        
+        await sut.update()
+        #expect(sut.activityItems.count == 30)
+        #expect(sut.nextCursor == nil)
+        #expect(sut.hasMore == false)
     }
 
 }
