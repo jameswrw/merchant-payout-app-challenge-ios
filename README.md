@@ -7,7 +7,7 @@ I believe the following requuirements have been carried out:
 - Require biometric authentication for payouts over £1,000.00
 - Protect the payout screen from screenshots and screen recording
 - Handle various edge cases, including network errors and insufficient funds
-
+### Notes
 - There are some examples of accessibility usage such as accessibilityIdentifiers for UI tests and traits to identify headers.
 - There are more magic padding numbers than I would like. Ideally there would be a design system and a limited amount of options for padding and insets.
 - On the subject of design systems I have tried to use system colours and images throughout. A commercial app may want their own set of designs and a corporate colour scheme.
