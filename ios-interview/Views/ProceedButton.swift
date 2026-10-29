@@ -15,17 +15,20 @@ struct ProceedButton: View {
         self.isDisabled = isDisabled
         self.action = action
     }
-
+    
     var body: some View {
-        Button(action: action) {
-            Text(title)
+        HStack {
+            Button(action: action) {
+                Text(title)
+                    .fontWeight(.semibold)
+                    .padding(8)
+            }
+            .accessibilityIdentifier(accessibilityIdentifier ?? "")
+            .buttonStyle(.borderedProminent)
+            .clipShape(Capsule())
+            .disabled(isDisabled)
         }
-        .accessibilityIdentifier(accessibilityIdentifier ?? "")
-        .buttonStyle(.borderedProminent)
-        .controlSize(.regular)
-        .fontWeight(.semibold)
         .frame(maxWidth: .infinity)
-        .disabled(isDisabled)
     }
 }
 
